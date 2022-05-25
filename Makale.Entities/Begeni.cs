@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace Makale.Entities
 {
-    [Table("Yorumlar")]
-    public class Yorum:EntityBase
+    [Table("Begeniler")]
+    public class Begeni
     {
-        [Required,StringLength(300)]
-        public string YorumText { get; set; }
-
+        [Key]
+        public int Id { get; set; }
         public virtual Not Makale { get; set; }
         public virtual Kullanici Kullanici { get; set; }
     }
