@@ -67,7 +67,17 @@ namespace MakaleWebProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(LoginViewModel model)
+        public ActionResult Register(RegisterViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                return RedirectToAction("RegisterOK");
+            }
+
+            return View();
+        }
+
+        public ActionResult RegisterOK()
         {
             return View();
         }
