@@ -1,16 +1,15 @@
-﻿ <!-- Page Content -->
+﻿@using Makale.Entities
+@model List<Not>
+
+@{ ViewBag.Title = "Index"; }
+
+<!-- Page Content -->
 <div class="container">
 
     <div class="row">
 
         <div class="col-md-3">
-            <p class="lead">Kategoriler</p>
-            <div class="list-group">
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-align-right"></span>Tümü</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-align-right"></span>Category 1</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-align-right"></span>Category 2</a>
-                <a href="#" class="list-group-item"><span class="glyphicon glyphicon-align-right"></span>Category 3</a>
-            </div>
+            @Html.Partial("_PartialKategoriler")
         </div>
 
         <div class="col-md-9">
@@ -47,194 +46,60 @@
             </div>
 
             <div class="row">
+                @foreach (var item in Model)
+                {
+    <div class="col-sm-4 col-lg-4 col-md-4">
+        <div class="thumbnail">
+            <img src="https://picsum.photos/seed/picsum/320/150" alt="">
+            <div class="caption">
+                <h4>
+                    <a href="#">@item.Baslik</a>
+                </h4>
+                <h6 class="text-right">
+                    <span class="glyphicon glyphicon-user"></span>  @item.Kullanici.KullaniciAdi <br />
+                    <span class="glyphicon glyphicon-time"></span>@item.DegistirmeTarihi.ToString("dd.MM.yy HH:mm")
+                </h6>
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-                            
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
+                @if (string.IsNullOrEmpty(item.Icerik) == false && item.Icerik.Length > 70)
+                {
+                    <p>
+                        @(item.Icerik.Substring(0,70)+"...")
+                    </p>
+                    <p>
+                        <a href="#" class="btn btn-default btn-xs">devamı
+                        <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </p>
 
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
+                }
+                else
+                {
+                    <p>
+                        @item.Icerik
+                    </p>
 
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                }
 
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
 
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
+            </div>
+            <div><hr /></div>
+            <div class="ratings">
+                <p class="pull-right">
+                    <button class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
+                    </button>
+                </p>
 
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
+                <p>
+                    <button class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-heart-empty"></span> @item.BegeniSayisi
+                    </button>
 
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
+                </p>
+            </div>
+        </div>
+    </div>}
 
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
 
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <img src="https://picsum.photos/seed/picsum/320/150" alt="">
-                        <div class="caption">
-
-                            <h4 class="text-center">
-                                <a href="#">First Product</a>
-                            </h4>
-                            <h6 class="text-right">
-                                <span class="glyphicon glyphicon-user"></span>  kullanıcıadı <br />
-                                <span class="glyphicon glyphicon-time"></span>25.05.2022 19:47
-                            </h6>
-                            <p>See more snippets like this online store item at </p>
-                        </div>
-                        <div><hr /></div>
-                        <div class="ratings">
-                            <p class="pull-right">
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
-                                </button>
-                            </p>
-
-                            <p>
-                                <button class="btn btn-default btn-xs">
-                                    <span class="glyphicon glyphicon-heart-empty"></span> 15
-                                </button>
-
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>

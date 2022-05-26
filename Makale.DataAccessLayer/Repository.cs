@@ -11,18 +11,24 @@ namespace Makale.DataAccessLayer
 {
    public class Repository<T> where T:class
     {
-        DatabaseContext db = new DatabaseContext();
+        private DatabaseContext db; 
 
         private DbSet<T> objset;
 
         public Repository()
         {
+            db = Singleton.CreateContext();
             objset = db.Set<T>();
         }
 
         public List<T> List()
         {
             return objset.ToList();
+        }
+
+        public IQueryable<T> ListQueryable()
+        {
+            return objset.AsQueryable<T>();
         }
 
         public List<T> List(Expression<Func<T,bool>> where )
