@@ -1,6 +1,5 @@
 ﻿using Makale.BusinessLayer;
 using Makale.Entities;
-using MakaleWebProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace MakaleWebProject.Controllers
     
         MakaleYonet my = new MakaleYonet();
         KategoriYonet ky = new KategoriYonet();
-
+        KullaniciYonet kuly = new KullaniciYonet();
         public ActionResult Index()
         {
            return View(my.MakaleGetir().OrderByDescending(x=>x.DegistirmeTarihi).ToList());
@@ -58,7 +57,23 @@ namespace MakaleWebProject.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            return View();
+            if(ModelState.IsValid)
+            {
+              BusinessLayerResult<Kullanici> sonuc=  kuly.LoginKullanici(model);
+             
+                if(sonuc.hata.Count>0)
+                {
+                    sonuc.hata.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
+                }
+
+                Session["login"] = sonuc.Sonuc;
+
+                return RedirectToAction("Index");
+
+            }
+
+            return View(model);
         }
 
         public ActionResult Register()
@@ -71,6 +86,14 @@ namespace MakaleWebProject.Controllers
         {
             if(ModelState.IsValid)
             {
+               BusinessLayerResult<Kullanici> result= kuly.KullaniciKaydet(model);
+
+                if(result.hata.Count>0)
+                {
+                    result.hata.ForEach(x => ModelState.AddModelError("", x));
+                    return View(model);
+                }
+
                 return RedirectToAction("RegisterOK");
             }
 
@@ -82,5 +105,33 @@ namespace MakaleWebProject.Controllers
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
+
+        public ActionResult UserActivate(Guid AktifGuid)
+        {
+            BusinessLayerResult<Kullanici> sonuc = kuly.ActivateUser(AktifGuid);
+
+            if(sonuc.hata.Count>0)
+            {
+                TempData["error"] = sonuc.hata;
+                return RedirectToAction("UserActivateError");
+            }
+
+            return RedirectToAction("UserActivateOK");
+        }
+
+        public ActionResult UserActivateError()
+        {
+            return View();
+        }
     }
 }

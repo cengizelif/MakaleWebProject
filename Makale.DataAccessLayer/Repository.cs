@@ -43,7 +43,16 @@ namespace Makale.DataAccessLayer
 
 
         public int Insert(T nesne)
-        {
+        {           
+
+            if(nesne is EntityBase)
+            {
+                EntityBase obj =nesne as EntityBase; 
+                obj.KayitTarihi = DateTime.Now;
+                obj.DegistirmeTarihi = DateTime.Now;
+                obj.DegistirenKullanici = "system";
+            }
+
             objset.Add(nesne);
             return Save();
         }
@@ -53,8 +62,14 @@ namespace Makale.DataAccessLayer
             return db.SaveChanges();
         }
 
-        public int Update()
+        public int Update(T nesne)
         {
+            if (nesne is EntityBase)
+            {
+                EntityBase obj = nesne as EntityBase;
+                obj.DegistirmeTarihi = DateTime.Now;
+                obj.DegistirenKullanici = "system";
+            }
             return Save();
         }
 

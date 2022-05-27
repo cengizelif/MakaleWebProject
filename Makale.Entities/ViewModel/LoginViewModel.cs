@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MakaleWebProject.Models
+namespace Makale.Entities
 {
     public class LoginViewModel
     {

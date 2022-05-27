@@ -129,8 +129,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +141,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\RegisterOK.cshtml" />
+    <Content Include="Views\Home\UserActivateError.cshtml" />
+    <Content Include="Views\Home\UserActivateOK.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -152,11 +152,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Makale.BusinessLayer\Makale.BusinessLayer.csproj">
       <Project>{126ad19c-1a21-4075-a7e0-6ca8fcea16b8}</Project>
       <Name>Makale.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Makale.Common\Makale.Common.csproj">
+      <Project>{782777d2-a17b-4fa0-9e20-27e03349fd1f}</Project>
+      <Name>Makale.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Makale.Entities\Makale.Entities.csproj">
       <Project>{3d6859e8-5f4b-49b2-962f-44b6916501eb}</Project>
