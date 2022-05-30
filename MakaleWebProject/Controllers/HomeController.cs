@@ -116,9 +116,9 @@ namespace MakaleWebProject.Controllers
             return View();
         }
 
-        public ActionResult UserActivate(Guid AktifGuid)
+        public ActionResult UserActivate(Guid id)
         {
-            BusinessLayerResult<Kullanici> sonuc = kuly.ActivateUser(AktifGuid);
+            BusinessLayerResult<Kullanici> sonuc = kuly.ActivateUser(id);
 
             if(sonuc.hata.Count>0)
             {
@@ -129,7 +129,16 @@ namespace MakaleWebProject.Controllers
             return RedirectToAction("UserActivateOK");
         }
 
-        public ActionResult UserActivateError()
+        public ActionResult UserActivateError()      {
+
+            List<string> hatamesaj = null;
+
+            if(TempData["error"]!=null)
+               hatamesaj= TempData["error"] as List<string>;
+
+            return View(hatamesaj);
+        }
+        public ActionResult UserActivateOK()
         {
             return View();
         }
