@@ -144,7 +144,6 @@ namespace MakaleWebProject.Controllers
             if(profilresim!=null && (profilresim.ContentType=="image/jpeg" ||  profilresim.ContentType == "image/jpg" ||
               profilresim.ContentType == "image/png"))
             {
-
                 string dosyaadi = $"user_{model.Id}.{profilresim.ContentType.Split('/')[1]}";
 
                 profilresim.SaveAs(Server.MapPath($"~/image/{dosyaadi}"));
@@ -166,7 +165,16 @@ namespace MakaleWebProject.Controllers
 
         public ActionResult ProfilSil()
         {
-            return View();
+            Kullanici user = Session["login"] as Kullanici;
+
+            BusinessLayerResult<Kullanici> sonuc = kuly.KullaniciSil(user.Id);
+
+            if (sonuc.hata.Count > 0)
+                return RedirectToAction("ProfilGoster");
+
+
+            Session.Clear();
+            return RedirectToAction("Index");
         }
 
         public ActionResult UserActivate(Guid id)

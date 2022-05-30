@@ -149,5 +149,25 @@ namespace Makale.BusinessLayer
 
             return kul_sonuc;
         }
+
+        public BusinessLayerResult<Kullanici> KullaniciSil(int id)
+        {
+            Kullanici user = repo_kul.Find(x => x.Id == id);
+
+            if(user==null)
+            {
+                kul_sonuc.hata.Add("Kullanıcı bulunamadı.");
+            }
+            else
+            {
+                if (repo_kul.Delete(user) == 0)
+                {
+                  kul_sonuc.hata.Add("Kullanıcı silinemedi.");                    
+                }
+                   
+            }
+            return kul_sonuc;
+
+        }
     }
 }
