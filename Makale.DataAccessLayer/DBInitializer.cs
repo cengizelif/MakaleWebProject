@@ -12,18 +12,19 @@ namespace Makale.DataAccessLayer
     {
         protected override void Seed(DatabaseContext context)
         {
-            Kullanici admin =new Kullanici() 
-            { 
-                Adi="Elif",
-                Soyadi="Cengiz",
-                Email="cenelif@gmail.com",
-                Aktif=true,
-                Admin=true,
-                KullaniciAdi="elif",
-                Sifre="1234",
-                AktifGuid=Guid.NewGuid(),
-                KayitTarihi=DateTime.Now,
-                DegistirmeTarihi=DateTime.Now.AddMinutes(5),
+            Kullanici admin = new Kullanici()
+            {
+                Adi = "Elif",
+                Soyadi = "Cengiz",
+                Email = "cenelif@gmail.com",
+                Aktif = true,
+                Admin = true,
+                KullaniciAdi = "elif",
+                Sifre = "1234",
+                AktifGuid = Guid.NewGuid(),
+                KayitTarihi = DateTime.Now,
+                ProfilResmi = "user_image.png",
+                DegistirmeTarihi =DateTime.Now.AddMinutes(5),
                 DegistirenKullanici="elif"       
             
             };
@@ -42,7 +43,8 @@ namespace Makale.DataAccessLayer
                     Admin=false,
                     KullaniciAdi=$"user{i}",
                     Sifre="123",                    KayitTarihi=DateTime.Now.AddDays(-1),
-                    DegistirmeTarihi=DateTime.Now,
+                    ProfilResmi = "user_image.png",
+                DegistirmeTarihi =DateTime.Now,
                     DegistirenKullanici= $"user{i}"
                 };
               

@@ -26,6 +26,9 @@ namespace Makale.Entities
         [Required, StringLength(25)]
         public string Sifre { get; set; }
 
+        [StringLength(30)]
+        public string ProfilResmi { get; set; }
+
         public bool Admin { get; set; }
         public bool Aktif { get; set; }
 

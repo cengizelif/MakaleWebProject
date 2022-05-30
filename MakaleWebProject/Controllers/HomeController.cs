@@ -111,7 +111,20 @@ namespace MakaleWebProject.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult UserProfile()
+        public ActionResult ProfilGoster()
+        {
+            Kullanici user = Session["login"] as Kullanici;
+
+
+            return View(user);
+        }
+
+        public ActionResult ProfilDuzenle()
+        {
+            return View();
+        }
+
+        public ActionResult ProfilSil()
         {
             return View();
         }
