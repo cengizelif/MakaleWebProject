@@ -114,15 +114,55 @@ namespace MakaleWebProject.Controllers
         public ActionResult ProfilGoster()
         {
             Kullanici user = Session["login"] as Kullanici;
+            BusinessLayerResult<Kullanici> result =kuly.KullaniciBul(user.Id);
 
+            if(result.hata.Count>0)
+            {
+                //Hata sayfasına yönlenebilir.
+            }
 
-            return View(user);
+            return View(result.Sonuc);
         }
 
         public ActionResult ProfilDuzenle()
         {
-            return View();
+            Kullanici user = Session["login"] as Kullanici;
+            BusinessLayerResult<Kullanici> result = kuly.KullaniciBul(user.Id);
+
+            if (result.hata.Count > 0)
+            {
+                //Hata sayfasına yönlenebilir.
+            }
+
+            return View(result.Sonuc);
         }
+
+        [HttpPost]
+        public ActionResult ProfilDuzenle(Kullanici model,HttpPostedFileBase profilresim)
+        {
+
+            if(profilresim!=null && (profilresim.ContentType=="image/jpeg" ||  profilresim.ContentType == "image/jpg" ||
+              profilresim.ContentType == "image/png"))
+            {
+
+                string dosyaadi = $"user_{model.Id}.{profilresim.ContentType.Split('/')[1]}";
+
+                profilresim.SaveAs(Server.MapPath($"~/image/{dosyaadi}"));
+                model.ProfilResmi = dosyaadi;
+            }
+
+            BusinessLayerResult<Kullanici> sonuc = kuly.KullaniciUpdate(model);
+
+            if(sonuc.hata.Count>0)
+            {
+                return View(model);
+            }
+
+            Session["login"] = sonuc.Sonuc;
+
+            return RedirectToAction("ProfilGoster");
+        }
+
 
         public ActionResult ProfilSil()
         {

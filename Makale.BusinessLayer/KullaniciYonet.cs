@@ -84,6 +84,17 @@ namespace Makale.BusinessLayer
 
         }
 
+        public BusinessLayerResult<Kullanici> KullaniciBul(int id)
+        {
+           kul_sonuc.Sonuc=repo_kul.Find(x => x.Id == id);
+
+            if(kul_sonuc.Sonuc==null)
+            {
+                kul_sonuc.hata.Add("Kullanıcı bulunamadı.");
+            }
+            return kul_sonuc;
+        }
+
         public BusinessLayerResult<Kullanici> ActivateUser(Guid aktifGuid)
         {
             kul_sonuc.Sonuc = repo_kul.Find(x => x.AktifGuid == aktifGuid);
@@ -101,6 +112,42 @@ namespace Makale.BusinessLayer
             }
             return kul_sonuc;
 
+        }
+
+        public BusinessLayerResult<Kullanici> KullaniciUpdate(Kullanici model)
+        {
+            Kullanici user = repo_kul.Find(x=>x.KullaniciAdi==model.KullaniciAdi || x.Email==model.Email);
+
+            if(user!=null && user.Id!=model.Id)
+            {
+                if(user.KullaniciAdi==model.KullaniciAdi)
+                {
+                    kul_sonuc.hata.Add("Bu kullanıcı adı kayıtlı.");
+                }
+
+                if(user.Email==model.Email)
+                {
+                    kul_sonuc.hata.Add("Bu e-posta kayıtlı");
+                }
+
+                return kul_sonuc;
+            }
+
+            kul_sonuc.Sonuc = repo_kul.Find(x => x.Id == model.Id);
+
+            kul_sonuc.Sonuc.Email = model.Email;
+            kul_sonuc.Sonuc.Adi = model.Adi;
+            kul_sonuc.Sonuc.Soyadi = model.Soyadi;
+            kul_sonuc.Sonuc.KullaniciAdi = model.KullaniciAdi;
+            kul_sonuc.Sonuc.Sifre = model.Sifre;
+
+            if (string.IsNullOrEmpty(model.ProfilResmi) == false)
+                kul_sonuc.Sonuc.ProfilResmi = model.ProfilResmi;
+
+            if (repo_kul.Update(kul_sonuc.Sonuc) == 0)
+                kul_sonuc.hata.Add("Kullanıcı güncellenemedi.");
+
+            return kul_sonuc;
         }
     }
 }
