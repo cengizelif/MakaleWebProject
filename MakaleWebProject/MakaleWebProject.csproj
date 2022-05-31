@@ -101,6 +101,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\shop-homepage.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\validation-summary.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -146,6 +147,7 @@
     <Content Include="Views\Home\UserActivateOK.cshtml" />
     <Content Include="Views\Home\ProfilGoster.cshtml" />
     <Content Include="Views\Home\ProfilDuzenle.cshtml" />
+    <Content Include="Views\Shared\_PartialFooter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

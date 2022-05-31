@@ -116,7 +116,7 @@ namespace Makale.BusinessLayer
 
         public BusinessLayerResult<Kullanici> KullaniciUpdate(Kullanici model)
         {
-            Kullanici user = repo_kul.Find(x=>x.KullaniciAdi==model.KullaniciAdi || x.Email==model.Email);
+            Kullanici user = repo_kul.Find(x=>x.Id!=model.Id &&(x.KullaniciAdi==model.KullaniciAdi || x.Email==model.Email));
 
             if(user!=null && user.Id!=model.Id)
             {

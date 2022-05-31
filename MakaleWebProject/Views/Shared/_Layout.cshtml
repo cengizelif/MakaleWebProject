@@ -41,16 +41,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Makaleler</a>
+                <a class="navbar-brand" href="/Home/Index">Makaleler</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     @if (user != null)
                     {
-                        <li>
-                            <a href="#"><span class="glyphicon glyphicon-wrench"></span>Yönetim</a>
-                        </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-wrench"></span>Yönetim <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Makale Ekle</a></li>
+                        <li><a href="#">Makalelerim</a></li>
+                        @if (user.Admin)
+                        {
+                           <li role="separator" class="divider"></li>
+                           <li><a href="#">Kategori Ekle</a></li>                <li><a href="#">Kategoriler</a></li>
+                        }
+
+                    </ul>
+                </li>
+
                     }
 
                     <li>
@@ -108,45 +121,8 @@
 
     <div class="container">
 
-        <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <h5><strong>Site Haritası</strong></h5>
-                    <hr />
-                    <p>
-                        <a href="/Home/About"><span class="glyphicon glyphicon-info-sign"></span>Hakkımızda</a><br />
-                        <a href="/Home/Contact"><span class="glyphicon glyphicon-envelope"></span>iletişim</a><br />
-                    </p>
-                </div>
-
-                <div class="col-md-4 text-center">
-                    <p>Tüm hakları saklıdır. &copy; Makale @DateTime.Now.Year</p>
-                </div>
-
-                <div class="col-md-4 text-center">
-                    <h5>
-                        <strong>E-Bülten Üyeliği</strong>
-                    </h5>
-                    <hr />
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="E-posta adresiniz">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <span class="glyphicon glyphicon-send"></span>
-                                    Gönder
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </footer>
-
+        @RenderSection("footer",required:false)
+   
     </div>
 
 

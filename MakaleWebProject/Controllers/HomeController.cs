@@ -141,25 +141,38 @@ namespace MakaleWebProject.Controllers
         public ActionResult ProfilDuzenle(Kullanici model,HttpPostedFileBase profilresim)
         {
 
-            if(profilresim!=null && (profilresim.ContentType=="image/jpeg" ||  profilresim.ContentType == "image/jpg" ||
+            ModelState.Remove("DegistirenKullanici");
+
+            if(ModelState.IsValid)
+            {
+                if (profilresim != null && (profilresim.ContentType == "image/jpeg" || profilresim.ContentType == "image/jpg" ||
               profilresim.ContentType == "image/png"))
-            {
-                string dosyaadi = $"user_{model.Id}.{profilresim.ContentType.Split('/')[1]}";
+                {
+                    string dosyaadi = $"user_{model.Id}.{profilresim.ContentType.Split('/')[1]}";
 
-                profilresim.SaveAs(Server.MapPath($"~/image/{dosyaadi}"));
-                model.ProfilResmi = dosyaadi;
+                    profilresim.SaveAs(Server.MapPath($"~/image/{dosyaadi}"));
+                    model.ProfilResmi = dosyaadi;
+                }
+
+                BusinessLayerResult<Kullanici> sonuc = kuly.KullaniciUpdate(model);
+
+                if (sonuc.hata.Count > 0)
+                {
+                    for (int i = 0; i < sonuc.hata.Count; i++)
+                    {
+                      ModelState.AddModelError("", (sonuc.hata)[i]);
+                    }
+                    
+                    return View(model);
+                }
+
+                Session["login"] = sonuc.Sonuc;
+
+                return RedirectToAction("ProfilGoster");
             }
 
-            BusinessLayerResult<Kullanici> sonuc = kuly.KullaniciUpdate(model);
-
-            if(sonuc.hata.Count>0)
-            {
-                return View(model);
-            }
-
-            Session["login"] = sonuc.Sonuc;
-
-            return RedirectToAction("ProfilGoster");
+            return View(model);
+          
         }
 
 

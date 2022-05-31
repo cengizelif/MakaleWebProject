@@ -5,6 +5,7 @@
     ViewBag.Title = "Profil Düzenle";
 }
 
+<link href="~/Content/validation-summary.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row">
@@ -26,6 +27,7 @@
 
                     @Html.ValidationSummary(false)
                     @Html.HiddenFor(x=>x.Id)
+                    @Html.HiddenFor(x=>x.ProfilResmi)
                     <div class="form-group">
                         @Html.LabelFor(x => x.Adi, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
