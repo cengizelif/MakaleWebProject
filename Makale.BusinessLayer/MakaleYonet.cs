@@ -60,9 +60,35 @@ namespace Makale.BusinessLayer
             
         }
 
-        public void NotUpdate(Not not)
+        public BusinessLayerResult<Not> NotUpdate(Not not)
         {
-            throw new NotImplementedException();
+            not_result.Sonuc = repo_not.Find(x => x.Baslik == not.Baslik && x.KategoriId == not.KategoriId && x.Id!=not.Id);
+
+            if(not_result.Sonuc!=null)
+            {
+                not_result.hata.Add("Bu makale kayıtlı");
+            }
+            else 
+            {
+                not_result.Sonuc = repo_not.Find(x => x.Id == not.Id);
+                not_result.Sonuc.KategoriId = not.KategoriId;
+                not_result.Sonuc.Baslik = not.Baslik;
+                not_result.Sonuc.Icerik = not.Icerik;
+                not_result.Sonuc.Taslak = not.Taslak;
+                not_result.Sonuc.DegistirenKullanici = not.Kullanici.KullaniciAdi;
+
+               int sonuc= repo_not.Update(not_result.Sonuc);
+
+                if (sonuc == 0)
+                {
+                    not_result.hata.Add("Makale değiştirilemedi.");
+                }
+                else
+                    not_result.Sonuc= repo_not.Find(x => x.Id == not.Id);
+
+            }
+
+            return not_result;
         }
 
         public void NotSil(int id)
