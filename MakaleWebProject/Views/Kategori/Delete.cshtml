@@ -63,8 +63,11 @@
             @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Sil" class="btn btn-danger" /> 
-        @Html.ActionLink("Listeye Dön", "Index", "Kategori", null, new { @class = "btn btn-default" })
+        <input type="submit" value="Sil" class="btn btn-danger" />
+
+        @*<button type="submit" onclick="confirm('emin misin')" class="btn btn-danger btn-xs"></button>*@
+       
+            @Html.ActionLink("Listeye Dön", "Index", "Kategori", null, new { @class = "btn btn-default" })
     </div>
         }
     </div>

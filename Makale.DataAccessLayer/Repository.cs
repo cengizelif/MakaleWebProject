@@ -50,7 +50,9 @@ namespace Makale.DataAccessLayer
                 EntityBase obj =nesne as EntityBase; 
                 obj.KayitTarihi = DateTime.Now;
                 obj.DegistirmeTarihi = DateTime.Now;
-                obj.DegistirenKullanici = "system";
+
+                if(obj.DegistirenKullanici==null)
+                 obj.DegistirenKullanici = "system";
             }
 
             objset.Add(nesne);
@@ -68,7 +70,9 @@ namespace Makale.DataAccessLayer
             {
                 EntityBase obj = nesne as EntityBase;
                 obj.DegistirmeTarihi = DateTime.Now;
-                obj.DegistirenKullanici = "system";
+
+                if (obj.DegistirenKullanici == null)
+                    obj.DegistirenKullanici = "system";
             }
             return Save();
         }

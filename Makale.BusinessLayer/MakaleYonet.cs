@@ -12,6 +12,8 @@ namespace Makale.BusinessLayer
     {
         private Repository<Not> repo_not = new Repository<Not>();
 
+        BusinessLayerResult<Not> not_result = new BusinessLayerResult<Not>();
+
         public List<Not> MakaleGetir()
         {
             return repo_not.List();
@@ -22,9 +24,40 @@ namespace Makale.BusinessLayer
             return repo_not.Find(x => x.Id == id);
         }
 
-        public void NotKaydet(Not not)
+        public BusinessLayerResult<Not> NotKaydet(Not not)
         {
-            throw new NotImplementedException();
+            not_result.Sonuc = repo_not.Find(x => x.Baslik == not.Baslik && x.KategoriId == not.KategoriId);
+
+                if(not_result.Sonuc!=null)
+            {
+                not_result.hata.Add("Bu makale kayıtlı.");
+            }
+                else
+            {
+                Not n = new Not();
+                n.Kullanici = not.Kullanici;
+                n.KategoriId = not.KategoriId;
+                n.Baslik = not.Baslik;
+                n.Icerik = not.Icerik;
+                n.Taslak = not.Taslak;
+                n.DegistirenKullanici = not.Kullanici.KullaniciAdi;
+
+                int sonuc=repo_not.Insert(n);
+                if(sonuc==0)
+                {
+                    not_result.hata.Add("Makale kaydedilemedi.");
+                }
+                else
+                {
+                    not_result.Sonuc = n;
+                }
+
+               
+            }
+
+
+            return not_result;
+            
         }
 
         public void NotUpdate(Not not)

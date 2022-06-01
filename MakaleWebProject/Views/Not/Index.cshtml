@@ -4,72 +4,78 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Makaleler</h2>
+        <hr />
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Kategori.Baslik)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Baslik)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Icerik)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Taslak)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BegeniSayisi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KayitTarihi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DegistirmeTarihi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DegistirenKullanici)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <p>
+            <a href="/Not/Create" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                Yeni
+            </a>
+        </p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Kategori.Baslik)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Baslik)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Icerik)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Taslak)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BegeniSayisi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.KayitTarihi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DegistirmeTarihi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DegistirenKullanici)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Kategori.Baslik)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Baslik)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Icerik)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BegeniSayisi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DegistirenKullanici)
+                </th>
+                <th></th>
+            </tr>
 
-</table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Kategori.Baslik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Baslik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Icerik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BegeniSayisi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DegistirenKullanici)
+                    </td>
+                    <td>
+                        <a href="/Not/Edit/@item.Id" class="btn btn-warning btn-xs">
+                            <span class="glyphicon glyphicon-edit"></span>  Düzenle
+                        </a>
+
+                        <a href="/Not/Details/@item.Id" class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon-search"></span>  Detay
+                        </a>
+
+                        <a href="/Not/Delete/@item.Id" class="btn btn-danger btn-xs">
+                            <span class="glyphicon glyphicon-trash"></span>  Sil
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+

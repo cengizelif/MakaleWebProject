@@ -48,11 +48,23 @@ namespace MakaleWebProject.Controllers
           
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Not not)
+        public ActionResult Create(Not not)
         {
+            ModelState.Remove("KayitTarihi");
+            ModelState.Remove("DegistirmeTarihi");
+            ModelState.Remove("DegistirenKullanici");
+
             if (ModelState.IsValid)
             {
-                my.NotKaydet(not);
+                not.Kullanici =(Kullanici)Session["login"];
+
+                 BusinessLayerResult<Not> sonuc= my.NotKaydet(not);
+
+                if (sonuc.hata.Count > 0)
+                {
+                    sonuc.hata.ForEach(x => ModelState.AddModelError("", x));
+                    return View(not);
+                }
 
                 return RedirectToAction("Index");
             }
