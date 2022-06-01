@@ -19,9 +19,13 @@ namespace MakaleWebProject.Controllers
        
         public ActionResult Index()
         {
-            var nots = my.MakaleGetir();
-                //db.Nots.Include(n => n.Kategori);
-         
+            //var nots = my.MakaleGetir();
+
+            //db.Nots.Include(n => n.Kategori);
+            Kullanici user =(Kullanici)Session["login"];
+
+            var nots = my.ListQueryable().Include("Kullanici").Where(x => x.Kullanici.Id == user.Id).OrderByDescending(x => x.DegistirmeTarihi);
+
             return View(nots.ToList());
         }
 
@@ -54,6 +58,8 @@ namespace MakaleWebProject.Controllers
             ModelState.Remove("DegistirmeTarihi");
             ModelState.Remove("DegistirenKullanici");
 
+            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+
             if (ModelState.IsValid)
             {
                 not.Kullanici =(Kullanici)Session["login"];
@@ -69,7 +75,7 @@ namespace MakaleWebProject.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+          
             return View(not);
         }
 
@@ -92,13 +98,27 @@ namespace MakaleWebProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Not not)
         {
+            ModelState.Remove("KayitTarihi");
+            ModelState.Remove("DegistirmeTarihi");
+            ModelState.Remove("DegistirenKullanici");
+
+            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+
             if (ModelState.IsValid)
             {
-                my.NotUpdate(not);
+                not.Kullanici = (Kullanici)Session["login"];
+
+                BusinessLayerResult<Not> sonuc = my.NotUpdate(not);
+
+                if (sonuc.hata.Count > 0)
+                {
+                    sonuc.hata.ForEach(x => ModelState.AddModelError("", x));
+                    return View(not);
+                }                             
 
                 return RedirectToAction("Index");
             }
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+          
             return View(not);
         }
 
@@ -120,9 +140,9 @@ namespace MakaleWebProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Not not = my.NotBul(id);
-            my.NotSil(id);
-            return RedirectToAction("Index");
+           BusinessLayerResult<Not> sonuc= my.NotSil(id);
+
+           return RedirectToAction("Index");
         }
 
     }

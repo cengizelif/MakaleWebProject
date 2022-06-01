@@ -115,6 +115,7 @@
     <Content Include="image\user_image.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Code\Bootstrap.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -130,7 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\NotController.cs" />
-    <Compile Include="Data\MakaleWebProjectContext.cs" />
+    <Compile Include="Controllers\YorumController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,6 +162,7 @@
     <Content Include="Views\Not\Details.cshtml" />
     <Content Include="Views\Not\Edit.cshtml" />
     <Content Include="Views\Not\Index.cshtml" />
+    <Content Include="Views\Shared\_PartialYorum.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -171,6 +173,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Yorum\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Makale.BusinessLayer\Makale.BusinessLayer.csproj">

@@ -19,6 +19,11 @@ namespace Makale.BusinessLayer
             return repo_not.List();
         }
 
+        public IQueryable<Not> ListQueryable()
+        {
+            return repo_not.ListQueryable();
+        }
+
         public Not NotBul(int id)
         {
             return repo_not.Find(x => x.Id == id);
@@ -91,9 +96,25 @@ namespace Makale.BusinessLayer
             return not_result;
         }
 
-        public void NotSil(int id)
+        public BusinessLayerResult<Not> NotSil(int id)
         {
-            throw new NotImplementedException();
+
+            Not not = repo_not.Find(x => x.Id == id);
+            if(not!=null)
+            {
+               int sonuc=repo_not.Delete(not);
+                if(sonuc==0)
+                {
+                    not_result.hata.Add("Makale silinemedi");
+                }
+            }
+            else
+            {
+                not_result.hata.Add("Makale bulunamadı.");
+            }
+
+            return not_result;
+
         }
     }
 }
