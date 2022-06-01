@@ -16,5 +16,25 @@ namespace Makale.BusinessLayer
         {
             return repo_not.List();
         }
+
+        public Not NotBul(int id)
+        {
+            return repo_not.Find(x => x.Id == id);
+        }
+
+        public void NotKaydet(Not not)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NotUpdate(Not not)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NotSil(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
