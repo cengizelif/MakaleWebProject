@@ -116,3 +116,12 @@
     } 
 
 @Bootstrap.ModalPopup(id:"myModal")
+
+<script>
+
+    $('#myModal').on('show.bs.modal', function (e) {
+
+        $('#myModal_body').load("/Yorum/YorumGoster");
+
+})
+</script>

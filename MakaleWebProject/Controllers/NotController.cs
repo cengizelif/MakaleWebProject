@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Makale.BusinessLayer;
 using Makale.Entities;
-using MakaleWebProject.Data;
+
 
 namespace MakaleWebProject.Controllers
 {
