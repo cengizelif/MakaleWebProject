@@ -84,7 +84,7 @@
             <div><hr /></div>
             <div class="ratings">
                 <p class="pull-right">
-                    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal">
+                    <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" data-notid="@item.Id">
                         <span class="glyphicon glyphicon-comment text-danger"></span>    Yorumlar
                     </button>
                 </p>
@@ -117,11 +117,5 @@
 
 @Bootstrap.ModalPopup(id:"myModal")
 
-<script>
 
-    $('#myModal').on('show.bs.modal', function (e) {
-
-        $('#myModal_body').load("/Yorum/YorumGoster");
-
-})
-</script>
+<script src="~/Scripts/YorumScript.js"></script>
