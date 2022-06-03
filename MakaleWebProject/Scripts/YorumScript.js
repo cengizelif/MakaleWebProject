@@ -1,8 +1,9 @@
-﻿
-$('#myModal').on('show.bs.modal', function (e) {
+﻿var notid = -1;
 
+$('#myModal').on('show.bs.modal', function (e) {
+    
     var btn = $(e.relatedTarget);
-    var notid = btn.data("notid");
+     notid = btn.data("notid");
 
     $('#myModal_body').load("/Yorum/YorumGoster/" + notid);
 
@@ -10,6 +11,7 @@ $('#myModal').on('show.bs.modal', function (e) {
 
 function yorumislem(btn, mode, yorumid, textid) {
     var editmod = $(btn).data("editmode");
+ 
 
     if (mode === "edit") {
         if (!editmod) {
@@ -36,7 +38,7 @@ function yorumislem(btn, mode, yorumid, textid) {
 
             $.ajax({
                 method: "POST",
-                url: "Yorum/YorumUpdate/" + yorumid,
+                url: "/Yorum/YorumUpdate/" + yorumid,
                 data: { text: yorum }
             }).done(function (data) {
                 if (data.sonuc) {
@@ -66,7 +68,6 @@ function yorumislem(btn, mode, yorumid, textid) {
         }).done(function (data) {
             if (data.sonuc) {
                 $('#myModal_body').load("/Yorum/YorumGoster/" + notid);
-
             }
             else {
                 alert("Yorum silinemedi.");
@@ -76,28 +77,47 @@ function yorumislem(btn, mode, yorumid, textid) {
         });
 
 
-
     }
-    else if (mode === "create")
-    {
-        var yorum = $("#yorum_text").val();
+    else if (mode === "yorumekle") {
 
+         
+        var txt = $("#yorum_text").val();
         $.ajax({
             method: "POST",
-            url: "/Yorum/YorumEkle",
-            data: { "notid": notid, "YorumText":yorum }
+            url: "/Yorum/YorumEkle/",
+            data: { "YorumText": txt, "notid": notid }
         }).done(function (data) {
             if (data.sonuc) {
-                $('#myModal_body').load("/Yorum/YorumGoster/" + notid);
 
+                $('#myModal_body').load("/Yorum/YorumGoster/" + notid);
             }
             else {
-                alert("Yorum eklenemedi.");
+                alert("Yorum eklenemedi.")
             }
         }).fail(function () {
-            alert("Sunucu ile bağlantı kurulamadı.");
-        });
-    }
-};
+            alert("Sunucu ile bağlantı kurulamadı.")
+        })
+        //else if (mode === "yorumekle")
+        //{
+        //    console.log("deneme");
+        //    var yorum = $("#yorum_text").val();
 
+        //    $.ajax({
+        //        method: "POST",
+        //        url: "/Yorum/YorumEkle",
+        //        data: { "notid": notid, "YorumText":yorum }
+        //    }).done(function (data) {
+        //        if (data.sonuc) {
+        //            $('#myModal_body').load("/Yorum/YorumGoster/" + notid);
 
+        //        }
+        //        else {
+        //            alert("Yorum eklenemedi.");
+        //        }
+        //    }).fail(function () {
+        //        alert("Sunucu ile bağlantı kurulamadı.");
+        //    });
+        //}
+    };
+
+}
