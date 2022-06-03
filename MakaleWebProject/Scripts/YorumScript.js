@@ -79,9 +79,9 @@ function yorumislem(btn, mode, yorumid, textid) {
 
     }
     else if (mode === "yorumekle") {
-
          
         var txt = $("#yorum_text").val();
+
         $.ajax({
             method: "POST",
             url: "/Yorum/YorumEkle/",

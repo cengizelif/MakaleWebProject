@@ -145,5 +145,77 @@ namespace MakaleWebProject.Controllers
            return RedirectToAction("Index");
         }
 
+        LikeYonet ly = new LikeYonet();
+        public ActionResult LikeMakale(int[] dizi)
+        {          
+
+            Kullanici user=Session["login"] as Kullanici;
+
+            List<int> likedizi = new List<int>();
+
+            if(user!=null)
+            {
+                if (dizi != null)
+                {
+                    likedizi = ly.List(x => x.Kullanici.Id == user.Id && dizi.Contains(x.Makale.Id)).Select(x => x.Makale.Id).ToList();
+                }
+            }
+                   
+            
+            //Select MakaleID
+            //from Begeni b
+            //where b.kullanıcıID=user.Id and 
+            //b.makaleid in(3,5,9)
+
+            return Json(new { sonuc =likedizi});
+
+        }
+
+        [HttpPost]
+        public ActionResult LikeDurumuUpdate(int notid,bool like)
+        {
+            int sonuc = 0;
+            Kullanici user = Session["login"] as Kullanici;
+
+            Begeni begeni = ly.BegeniGetir(notid,user.Id);
+            
+            Not makale = my.NotBul(notid);
+
+            if(begeni!=null && like==false)
+            {
+              sonuc=ly.BegeniSil(begeni);
+            }
+            else if(begeni==null && like==true)
+            {
+              sonuc=ly.BegeniEkle(new Begeni()
+                { 
+                    Kullanici=user,
+                    Makale=makale
+
+                });
+            }
+
+            if(sonuc>0)
+            {
+                if(like)
+                {
+                    makale.BegeniSayisi++;
+                }
+                else
+                {
+                    makale.BegeniSayisi--;
+                }
+               
+               BusinessLayerResult<Not> result=  my.NotUpdate(makale);
+
+                if (result.hata.Count == 0)
+                {
+                    return Json(new { hata = false, sonuc = makale.BegeniSayisi });
+                }                   
+            }
+
+            return Json(new { hata = true, sonuc = makale.BegeniSayisi });
+
+        }
     }
 }

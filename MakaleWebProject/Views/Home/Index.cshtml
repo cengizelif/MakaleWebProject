@@ -48,7 +48,7 @@
             <div class="row">
                 @foreach (var item in Model)
                 {
-    <div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="col-sm-4 col-lg-4 col-md-4" data-notid="@item.Id">
         <div class="thumbnail">
             <img src="https://picsum.photos/seed/picsum/320/150" alt="">
             <div class="caption">
@@ -90,8 +90,10 @@
                 </p>
 
                 <p>
-                    <button class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-heart-empty"></span> @item.BegeniSayisi
+                    <button class="btn btn-default btn-xs" data-notid="@item.Id" data-liked="false">
+                        <span class="glyphicon glyphicon-heart-empty likekalp"></span>&nbsp;
+                        <span class="likesayisi">@item.BegeniSayisi</span>
+                        
                     </button>
 
                 </p>
@@ -119,3 +121,4 @@
 
 
 <script src="~/Scripts/YorumScript.js"></script>
+<script src="~/Scripts/LikeScript.js"></script>
