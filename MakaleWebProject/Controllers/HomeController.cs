@@ -6,10 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MakaleWebProject.Filter;
 
 
 namespace MakaleWebProject.Controllers
 {
+    [Exc]
     public class HomeController : Controller
     {
     
@@ -18,8 +20,11 @@ namespace MakaleWebProject.Controllers
         KullaniciYonet kuly = new KullaniciYonet();
         public ActionResult Index()
         {
-           return View(my.MakaleGetir().OrderByDescending(x=>x.DegistirmeTarihi).ToList());
+            //return View(my.MakaleGetir().OrderByDescending(x=>x.DegistirmeTarihi).ToList());
+
+            return View(my.ListQueryable().Where(x => x.Taslak == false).OrderByDescending(x => x.DegistirmeTarihi).ToList());
         }
+             
 
         public ActionResult Kategori(int? id)
         {
@@ -27,8 +32,7 @@ namespace MakaleWebProject.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-           
+                       
             Kategori kat=ky.KategoriBul(id.Value);
 
             if(kat==null)
@@ -36,7 +40,9 @@ namespace MakaleWebProject.Controllers
                 return HttpNotFound();
             }
 
-            return View("Index",kat.Makaleler);
+            List<Not> makaleler = my.ListQueryable().Where(x => x.Taslak == false && x.KategoriId==id).OrderByDescending(x => x.DegistirmeTarihi).ToList();
+
+            return View("Index",makaleler);
         }
 
         public ActionResult EnBegenilenler()
@@ -111,6 +117,8 @@ namespace MakaleWebProject.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [Auth]
         public ActionResult ProfilGoster()
         {
             Kullanici user = Session["login"] as Kullanici;
@@ -124,6 +132,7 @@ namespace MakaleWebProject.Controllers
             return View(result.Sonuc);
         }
 
+        [Auth]
         public ActionResult ProfilDuzenle()
         {
             Kullanici user = Session["login"] as Kullanici;
@@ -137,6 +146,7 @@ namespace MakaleWebProject.Controllers
             return View(result.Sonuc);
         }
 
+        [Auth]
         [HttpPost]
         public ActionResult ProfilDuzenle(Kullanici model,HttpPostedFileBase profilresim)
         {
@@ -175,7 +185,7 @@ namespace MakaleWebProject.Controllers
           
         }
 
-
+        [Auth]
         public ActionResult ProfilSil()
         {
             Kullanici user = Session["login"] as Kullanici;
@@ -190,6 +200,7 @@ namespace MakaleWebProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [Auth]
         public ActionResult UserActivate(Guid id)
         {
             BusinessLayerResult<Kullanici> sonuc = kuly.ActivateUser(id);
@@ -213,6 +224,16 @@ namespace MakaleWebProject.Controllers
             return View(hatamesaj);
         }
         public ActionResult UserActivateOK()
+        {
+            return View();
+        }
+
+        public ActionResult YetkisizErisim()
+        {
+            return View();
+        }
+
+        public ActionResult HataSayfasi()
         {
             return View();
         }

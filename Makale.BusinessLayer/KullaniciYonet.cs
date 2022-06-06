@@ -14,6 +14,10 @@ namespace Makale.BusinessLayer
         private Repository<Kullanici> repo_kul = new Repository<Kullanici>();
 
         BusinessLayerResult<Kullanici> kul_sonuc = new BusinessLayerResult<Kullanici>();
+        public List<Kullanici> KullaniciGetir()
+        {
+            return repo_kul.List();
+        }
 
         public BusinessLayerResult<Kullanici>  KullaniciKaydet(RegisterViewModel model)
         {

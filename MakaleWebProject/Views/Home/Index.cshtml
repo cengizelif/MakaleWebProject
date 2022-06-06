@@ -62,21 +62,20 @@
 
                 @if (string.IsNullOrEmpty(item.Icerik) == false && item.Icerik.Length > 70)
                 {
-                    <p>
-                        @(item.Icerik.Substring(0,70)+"...")
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-default btn-xs">devamı
-                        <span class="glyphicon glyphicon-chevron-right"></span></a>
-                    </p>
-
-                }
+                     <p>
+                         @(item.Icerik.Substring(0,70)+"...")
+                     </p>
+                     @*<a href="#" class="btn btn-default btn-xs">
+    devamı*@
+            <p>
+                <a tabindex="0" id="popoverId" class="btn btn-xs btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="@item.Baslik" data-content="@item.Icerik">devamı</a>
+             
+            </p> @*<span class="glyphicon glyphicon-chevron-right"></span>*@ }
                 else
                 {
                     <p>
-                        @item.Icerik
+                      @item.Icerik
                     </p>
-
                 }
 
 
@@ -93,7 +92,7 @@
                     <button class="btn btn-default btn-xs" data-notid="@item.Id" data-liked="false">
                         <span class="glyphicon glyphicon-heart-empty likekalp"></span>&nbsp;
                         <span class="likesayisi">@item.BegeniSayisi</span>
-                        
+
                     </button>
 
                 </p>
@@ -115,10 +114,15 @@
 
 @section footer{
     @Html.Partial("_PartialFooter")
-    } 
+}
 
-@Bootstrap.ModalPopup(id:"myModal")
-
+@Bootstrap.ModalPopup(id: "myModal")
 
 <script src="~/Scripts/YorumScript.js"></script>
 <script src="~/Scripts/LikeScript.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>

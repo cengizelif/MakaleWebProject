@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MakaleWebProject.Filter;
 
 namespace MakaleWebProject.Controllers
 {
+    [Exc]
     public class YorumController : Controller
     {
         // GET: Yorum
@@ -32,6 +34,7 @@ namespace MakaleWebProject.Controllers
 
         YorumYonet yy = new YorumYonet();
 
+        [Auth]
         [HttpPost]
         public ActionResult YorumUpdate(int? id,string text)
         {
@@ -58,6 +61,7 @@ namespace MakaleWebProject.Controllers
 
         }
 
+        [Auth]
         public ActionResult YorumSil(int? id)
         {
             if (id == null)
@@ -83,6 +87,7 @@ namespace MakaleWebProject.Controllers
 
         MakaleYonet my = new MakaleYonet();
 
+        [Auth]
         [HttpPost]
         public ActionResult YorumEkle(Yorum yorum,int? notid)
         {

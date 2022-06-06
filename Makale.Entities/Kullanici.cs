@@ -26,13 +26,13 @@ namespace Makale.Entities
         [Required, StringLength(25)]
         public string Sifre { get; set; }
 
-        [StringLength(30)]
+        [StringLength(30),ScaffoldColumn(false)]
         public string ProfilResmi { get; set; }
 
         public bool Admin { get; set; }
         public bool Aktif { get; set; }
 
-        [Required]
+        [Required,ScaffoldColumn(false)]
         public Guid AktifGuid { get; set; }
 
         public virtual List<Not> Makaleler { get; set; }

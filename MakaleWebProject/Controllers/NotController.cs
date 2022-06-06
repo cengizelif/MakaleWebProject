@@ -8,15 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using Makale.BusinessLayer;
 using Makale.Entities;
-
+using MakaleWebProject.Filter;
+using MakaleWebProject.Models;
 
 namespace MakaleWebProject.Controllers
 {
+    [Exc]
     public class NotController : Controller
     {
         MakaleYonet my = new MakaleYonet();
         KategoriYonet ky = new KategoriYonet();
        
+       
+        [Auth]
         public ActionResult Index()
         {
             //var nots = my.MakaleGetir();
@@ -29,6 +33,19 @@ namespace MakaleWebProject.Controllers
             return View(nots.ToList());
         }
 
+        public ActionResult Begendiklerim()
+        {
+            LikeYonet ly = new LikeYonet();
+
+            Kullanici user = Session["login"] as Kullanici;
+
+           var makale= ly.ListQueryable().Include("Kullanici").Include("Makale").Where(x => x.Kullanici.Id == user.Id).Select(x => x.Makale).Include("Kategori").Include("Kullanici").OrderByDescending(x => x.DegistirmeTarihi);
+             
+            return View("Index",makale.ToList());
+
+        }
+
+        [Auth]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -44,12 +61,14 @@ namespace MakaleWebProject.Controllers
             return View(not);
         }
 
+        [Auth]
         public ActionResult Create()
         {
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik");
+            ViewBag.KategoriId = new SelectList(CacheHelper.KategoriCahce(), "Id", "Baslik");
             return View();
         }
-          
+
+        [Auth]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Not not)
@@ -58,7 +77,7 @@ namespace MakaleWebProject.Controllers
             ModelState.Remove("DegistirmeTarihi");
             ModelState.Remove("DegistirenKullanici");
 
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+            ViewBag.KategoriId = new SelectList(CacheHelper.KategoriCahce(), "Id", "Baslik", not.KategoriId);
 
             if (ModelState.IsValid)
             {
@@ -79,6 +98,7 @@ namespace MakaleWebProject.Controllers
             return View(not);
         }
 
+        [Auth]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -90,10 +110,11 @@ namespace MakaleWebProject.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+            ViewBag.KategoriId = new SelectList(CacheHelper.KategoriCahce(), "Id", "Baslik", not.KategoriId);
             return View(not);
         }
 
+        [Auth]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Not not)
@@ -102,7 +123,7 @@ namespace MakaleWebProject.Controllers
             ModelState.Remove("DegistirmeTarihi");
             ModelState.Remove("DegistirenKullanici");
 
-            ViewBag.KategoriId = new SelectList(ky.KategoriGetir(), "Id", "Baslik", not.KategoriId);
+            ViewBag.KategoriId = new SelectList(CacheHelper.KategoriCahce(), "Id", "Baslik", not.KategoriId);
 
             if (ModelState.IsValid)
             {
@@ -122,6 +143,7 @@ namespace MakaleWebProject.Controllers
             return View(not);
         }
 
+        [Auth]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -138,6 +160,8 @@ namespace MakaleWebProject.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
+        [Auth]
         public ActionResult DeleteConfirmed(int id)
         {
            BusinessLayerResult<Not> sonuc= my.NotSil(id);

@@ -1,8 +1,8 @@
-﻿@using Makale.BusinessLayer
+﻿@using MakaleWebProject.Models
 @using Makale.Entities
-@{ 
-    KategoriYonet ky = new KategoriYonet();
-    List<Kategori> liste=ky.KategoriGetir();
+
+@{   
+    List<Kategori> liste = CacheHelper.KategoriCahce();
 }
 
 <p class="lead">Kategoriler</p>

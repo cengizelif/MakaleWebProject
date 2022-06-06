@@ -8,10 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using Makale.BusinessLayer;
 using Makale.Entities;
+using MakaleWebProject.Filter;
+using MakaleWebProject.Models;
 
 
 namespace MakaleWebProject.Controllers
 {
+    [Auth][AuthAdmin]
+    [Exc]
     public class KategoriController : Controller
     {
         KategoriYonet ky = new KategoriYonet(); 
@@ -58,6 +62,7 @@ namespace MakaleWebProject.Controllers
                     return View(kategori);
                 }
 
+                CacheHelper.CahceTemizle();
                 return RedirectToAction("Index");
             }
 
@@ -99,6 +104,9 @@ namespace MakaleWebProject.Controllers
 
                     return View(kategori);
                 }
+
+
+                CacheHelper.CahceTemizle();
                 return RedirectToAction("Index");
             }
             return View(kategori);
@@ -132,7 +140,9 @@ namespace MakaleWebProject.Controllers
             {
                 return View(kategori);
             }
-            
+
+
+            CacheHelper.CahceTemizle();
             return RedirectToAction("Index");
         }
 
